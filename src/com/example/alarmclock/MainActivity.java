@@ -5,9 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +25,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	Intent intent = new Intent(this, AlarmService.class);
+	startService(intent);
 	setContentView(R.layout.activity_main);
 	dbHelper = new ClockDatabaseHelper(this, "AlarmClock.db", null, 2);
 	ListView listView = (ListView) this.findViewById(R.id.clock_list);
@@ -51,17 +55,17 @@ public class MainActivity extends Activity {
 	SQLiteDatabase db = dbHelper.getWritableDatabase();
 	ContentValues values = new ContentValues();
 	// 开始组装第一条数据
-	values.put("hour", 11);
-	values.put("minute", 30);
+	values.put("hour", 23);
+	values.put("minute", 35);
 	values.put("ring", "gy");
 	values.put("tag", "come on");
-	values.put("start", 0);
-	values.put("repeat", 1);
+	values.put("start", 1);
+	values.put("repeat", 0);
 	db.insert("AlarmClock", null, values); // 插入第一条数据
 	values.clear();
 	// 开始组装第二条数据
-	values.put("hour", 16);
-	values.put("minute", 23);
+	values.put("hour", 23);
+	values.put("minute", 34);
 	values.put("ring", "ange");
 	values.put("tag", "come on");
 	values.put("start", 1);
@@ -70,7 +74,6 @@ public class MainActivity extends Activity {
 	Log.e("test", "add data");
 	}
 	});
-	
 //	// 数据更新按钮
 //	Button updateData = (Button) findViewById(R.id.update_data);
 //	updateData.setOnClickListener(new OnClickListener() {
@@ -84,16 +87,16 @@ public class MainActivity extends Activity {
 //	}
 //	});
 //	
-//	// 删除数据按钮
-//	Button deleteButton = (Button) findViewById(R.id.delete_data);
-//	deleteButton.setOnClickListener(new OnClickListener() {
-//	@Override
-//	public void onClick(View v) {
-//	SQLiteDatabase db = dbHelper.getWritableDatabase();
-//	db.delete("AlarmClock", "hour > ?", new String[] { "10" });
-//	Log.e("test", "delete data");
-//	}
-//	});
+	// 删除数据按钮
+	Button deleteButton = (Button) findViewById(R.id.delete_data);
+	deleteButton.setOnClickListener(new OnClickListener() {
+	@Override
+	public void onClick(View v) {
+	SQLiteDatabase db = dbHelper.getWritableDatabase();
+	db.delete("AlarmClock", "hour > ?", new String[] { "6" });
+	Log.e("test", "delete data");
+	}
+	});
 //	
 //	// 数据查询按钮
 //	Button queryButton = (Button) findViewById(R.id.query_data);
@@ -173,4 +176,33 @@ public class MainActivity extends Activity {
 			} while (cursor.moveToNext());
 		}
 	}
+//	private void getNextAlarm(Cursor cursor)
+//	{
+//		Long currentTime = SystemClock.elapsedRealtime();
+//		Long triggerTime;
+//		if (cursor.moveToFirst())
+//		{
+//			do
+//			{
+//			// 遍历Cursor对象
+//			int hour = cursor.getInt(cursor.
+//			getColumnIndex("hour"));
+//			int minute = cursor.getInt(cursor.
+//			getColumnIndex("minute"));
+//			String tag = cursor.getString(cursor.getColumnIndex
+//			("tag"));
+//			String weekDay[]= {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+//			int enableDays[] = {0, 0, 0, 0, 0, 0, 0};
+//			int start = cursor.getInt(cursor.getColumnIndex("start"));
+//			int repeat = cursor.getInt(cursor.getColumnIndex("repeat"));
+//			if (start == 1)
+//			{
+//				if (repeat == 0)
+//				{
+//					triggerTime =  
+//				}
+//			}
+//			} while (cursor.moveToNext());
+//		}
 }
+

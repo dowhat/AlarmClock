@@ -22,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".AlarmService" >
+		</service>
+		<receiver android:name=".AlarmReceiver" >
+		</receiver>
     </application>
 
 </manifest>

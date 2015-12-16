@@ -14,6 +14,12 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:text="Add data"
 />
+<Button
+android:id="@+id/delete_data"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Delete data"
+/>
 <ListView
 android:id="@+id/clock_list"
 android:layout_width="match_parent"
