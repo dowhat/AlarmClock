@@ -1,11 +1,15 @@
 package com.example.alarmclock;
 
+import java.io.File;
+
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -27,8 +31,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		int day = currentTime.weekDay;
 		int hour = currentTime.hour;
 		int minute = currentTime.minute;
-		MediaPlayer mediaplayer = MediaPlayer.create(context, R.raw.kalimba);
-		mediaplayer.stop();
+//		initMediaPlayer();
+		MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
 		{
 			if (cursor.getInt(cursor.getColumnIndex("start")) == 1)
@@ -36,19 +40,38 @@ public class AlarmReceiver extends BroadcastReceiver {
 				if (cursor.getInt(cursor.getColumnIndex("repeat")) == 1 && cursor.getColumnIndex(weekDay[day]) == 1)
 				{
 					Log.e("test", "时间到re");
-					mediaplayer.start();
+					mediaPlayer.start();
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				mediaPlayer.stop();
 				}
 				else
 				{
 					if (cursor.getInt(cursor.getColumnIndex("hour")) == hour && cursor.getInt(cursor.getColumnIndex("minute")) == minute)
 					{
 						Log.e("test", "时间到");
-						mediaplayer.start();
+						mediaPlayer.start();
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						mediaPlayer.stop();
 					}
 					Log.e("test", "nothing");
+//					mediaPlayer.start();
 				}
 			}
 		}
+		
+		
+		
 	}
+	
 
 }

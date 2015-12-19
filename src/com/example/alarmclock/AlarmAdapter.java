@@ -23,7 +23,7 @@ public class AlarmAdapter extends ArrayAdapter<AlarmInfo> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-	AlarmInfo alarmInfo = getItem(position); // 获取当前项的Fruit实例
+	AlarmInfo alarmInfo = getItem(position); // 获取当前项的Alarm实例
 	View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
 	TextView clockTime = (TextView) view.findViewById(R.id.clock_time);
 	TextView clockRepeat = (TextView) view.findViewById(R.id.clock_repeat);

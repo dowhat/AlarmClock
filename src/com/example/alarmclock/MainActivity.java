@@ -13,10 +13,12 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends Activity {
 
@@ -30,7 +32,6 @@ public class MainActivity extends Activity {
 	setContentView(R.layout.activity_main);
 	dbHelper = new ClockDatabaseHelper(this, "AlarmClock.db", null, 2);
 	ListView listView = (ListView) this.findViewById(R.id.clock_list);
-	
 	SQLiteDatabase db = dbHelper.getWritableDatabase();
 	// 查询Book表中所有的数据
 	Cursor cursor = db.query("AlarmClock", null, null, null, null, null, null);
@@ -38,6 +39,15 @@ public class MainActivity extends Activity {
 	AlarmAdapter adapter = new AlarmAdapter(MainActivity.this, R.layout.clock_view, alarmList);
 //	SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.clock_view, cursor, new String[]{"tag"}, new int[]{R.id.clock_tag});
 	listView.setAdapter(adapter);
+	listView.setOnItemClickListener(new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position ,long id)
+		{
+			AlarmInfo alarminfo = alarmList.get(position);
+			Intent editIntent = new Intent(MainActivity.this, EditAlarmActivity.class);
+			startActivity(editIntent);
+		}
+	});
 	// create database
 	Button createDatabase = (Button) findViewById(R.id.create_database);
 	createDatabase.setOnClickListener(new OnClickListener() {
@@ -47,31 +57,14 @@ public class MainActivity extends Activity {
 	}
 	});
 	
-	// 创建数据库按钮
+	// add alarm clock
 	Button addData = (Button) findViewById(R.id.add_data);
 	addData.setOnClickListener(new OnClickListener() {
 	@Override
-	public void onClick(View v) {
-	SQLiteDatabase db = dbHelper.getWritableDatabase();
-	ContentValues values = new ContentValues();
-	// 开始组装第一条数据
-	values.put("hour", 23);
-	values.put("minute", 35);
-	values.put("ring", "gy");
-	values.put("tag", "come on");
-	values.put("start", 1);
-	values.put("repeat", 0);
-	db.insert("AlarmClock", null, values); // 插入第一条数据
-	values.clear();
-	// 开始组装第二条数据
-	values.put("hour", 23);
-	values.put("minute", 34);
-	values.put("ring", "ange");
-	values.put("tag", "come on");
-	values.put("start", 1);
-	values.put("repeat", 0);
-	db.insert("AlarmClock", null, values); // 插入第二条数据
-	Log.e("test", "add data");
+	public void onClick(View v)
+	{
+		Intent intent = new Intent(MainActivity.this, AddAlarmActivity.class);
+		startActivity(intent);
 	}
 	});
 //	// 数据更新按钮
