@@ -31,5 +31,6 @@
     <Button 
         android:id="@+id/add_alarm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="确定" />
 </LinearLayout>

@@ -25,6 +25,9 @@
         <activity android:name=".AddAlarmActivity">
         
         </activity>
+        <activity android:name=".EditAlarmActivity">
+        
+        </activity>
         <service android:name=".AlarmService" >
 		</service>
 		<receiver android:name=".AlarmReceiver" >

@@ -45,6 +45,7 @@ public class MainActivity extends Activity {
 		{
 			AlarmInfo alarminfo = alarmList.get(position);
 			Intent editIntent = new Intent(MainActivity.this, EditAlarmActivity.class);
+			editIntent.putExtra("id", id);
 			startActivity(editIntent);
 		}
 	});
@@ -158,6 +159,7 @@ public class MainActivity extends Activity {
 			// ±È¿˙Cursor∂‘œÛ
 			int hour = cursor.getInt(cursor.
 			getColumnIndex("hour"));
+			Log.e("test", Integer.toString(cursor.getColumnIndex("id")));
 			int minute = cursor.getInt(cursor.
 			getColumnIndex("minute"));
 			String tag = cursor.getString(cursor.getColumnIndex
