@@ -4,6 +4,7 @@ import java.io.File;
 
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,11 +47,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				mediaPlayer.stop();
+					mediaPlayer.stop();
 				}
 				else
 				{
-					if (cursor.getInt(cursor.getColumnIndex("hour")) == hour && cursor.getInt(cursor.getColumnIndex("minute")) == minute)
+					if (cursor.getInt(cursor.getColumnIndex("repeat")) != 1 && cursor.getInt(cursor.getColumnIndex("hour")) == hour && cursor.getInt(cursor.getColumnIndex("minute")) == minute)
 					{
 						Log.e("test", "shenmegui");
 						Log.e("test", "ʱ�䵽");
@@ -62,6 +63,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 							e.printStackTrace();
 						}
 						mediaPlayer.stop();
+						SQLiteDatabase dbt = dbHelper.getWritableDatabase();
+						ContentValues values = new ContentValues();
+						values.put("start", 0);
+						dbt.update("AlarmClock", values, "id = ?", new String[] { Integer.toString(cursor.getInt(cursor.getColumnIndex("id"))) });
 					}
 //					Log.e("test", Integer.toString(hour));
 //					Log.e("test", Integer.toString(minute));

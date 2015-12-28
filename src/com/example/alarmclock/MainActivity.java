@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -20,10 +21,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
 	private ClockDatabaseHelper dbHelper;
 	private List<AlarmInfo> alarmList = new ArrayList<AlarmInfo>();
@@ -37,6 +39,8 @@ public class MainActivity extends Activity {
 	setContentView(R.layout.activity_main);
 	dbHelper = new ClockDatabaseHelper(this, "AlarmClock.db", null, 2);
 	ListView listView = (ListView) this.findViewById(R.id.clock_list);
+	TextView title = (TextView) this.findViewById(R.id.title_text);
+//	title.setBackgroundColor(Color.GRAY);
 	SQLiteDatabase db = dbHelper.getWritableDatabase();
 	// 查询Book表中所有的数据
 	Cursor cursor = db.query("AlarmClock", null, null, null, null, null, null);
@@ -51,7 +55,7 @@ public class MainActivity extends Activity {
 			AlarmInfo alarminfo = alarmList.get(position);
 			Intent editIntent = new Intent(MainActivity.this, EditAlarmActivity.class);
 			editIntent.putExtra("id", id);
-			Log.e("test", "change id" + id);
+			Log.e("test", "change id " + id);
 			startActivity(editIntent);
 		}
 	});
@@ -95,7 +99,7 @@ public class MainActivity extends Activity {
 			// 遍历Cursor对象
 			int hour = cursor.getInt(cursor.
 			getColumnIndex("hour"));
-			Log.e("test", Integer.toString(cursor.getColumnIndex("id")));
+			Log.e("test", "id:" + cursor.getInt(cursor.getColumnIndex("id")));
 			int minute = cursor.getInt(cursor.
 			getColumnIndex("minute"));
 			String tag = cursor.getString(cursor.getColumnIndex

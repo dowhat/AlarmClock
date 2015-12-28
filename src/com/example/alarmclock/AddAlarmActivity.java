@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class AddAlarmActivity extends Activity implements OnClickListener {
+public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 	
 	private String[] weekDays = new String[]{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"};
 	private String weekDaysE[]= {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
@@ -24,8 +24,16 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 	private boolean[] weekData = new boolean[]{false, false, false, false, false, false, false};
 	private ClockDatabaseHelper dbHelper;
 	private int ringBuf = 0;
-	private String tagBuf;
+	private String tagBuf = "";
 	private TimePicker timePicker;
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		ActivityCollector.finishAll();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -36,10 +44,12 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 		TextView ring =(TextView) this.findViewById(R.id.ring);
 		TextView tag =(TextView) this.findViewById(R.id.tag);
 		Button addAlarm = (Button) this.findViewById(R.id.title_edit);
+		Button backAlarm = (Button) this.findViewById(R.id.title_back);
 //		Button deleteAlarm = (Button) this.findViewById(R.id.delete_alarm);
 		repeat.setOnClickListener(this);
 		ring.setOnClickListener(this);
 		tag.setOnClickListener(this);
+		backAlarm.setOnClickListener(this);
 		addAlarm.setOnClickListener(this);
 		timePicker = (TimePicker) findViewById(R.id.timePicker1);
 		dbHelper = new ClockDatabaseHelper(this, "AlarmClock.db", null, 2);
@@ -143,9 +153,9 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 			values.put("hour", timePicker.getCurrentHour());
 			values.put("minute", timePicker.getCurrentMinute());
 			values.put("start", 1);
-			if (tagBuf != null)
+			if (tagBuf != "")
 			{
-				values.put("tag", tagBuf);	
+				values.put("tag", tagBuf);
 			}
 			for (int i = 0; i < weekDays.length; i++)
 			{
@@ -161,6 +171,9 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 			Intent intent = new Intent(AddAlarmActivity.this, MainActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.title_back:
+			Intent backIntent = new Intent(AddAlarmActivity.this, MainActivity.class);
+			startActivity(backIntent);
 		default:
 			break;
 		}

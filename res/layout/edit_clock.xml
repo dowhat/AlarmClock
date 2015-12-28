@@ -7,6 +7,7 @@
     <LinearLayout 
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="@drawable/bottom"
 		 >
 		<Button
 			android:id="@+id/title_back"
@@ -41,8 +42,16 @@
         android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/login_back"
+        android:layout_marginTop="15dip"
         android:layout_gravity="center" />
 
+        <LinearLayout 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/login_back"
+		android:orientation="vertical"
+		 >
     <TextView 
         android:id="@+id/repeat"
         android:layout_width="match_parent"
@@ -61,11 +70,13 @@
         android:layout_height="wrap_content"
         android:textSize="28sp"
         android:text="标签" />
+    </LinearLayout>
     <Button 
         android:id="@+id/delete_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="#FF0000"
+        android:background="@drawable/bottom"
+        android:textColor="#cd0000"
         android:text="删除闹钟" />
 </LinearLayout>
