@@ -1,8 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+	
+	<LinearLayout 
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	 >
+		<Button
+			android:id="@+id/title_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_margin="5dip"
+			
+			android:text="取消"
+			android:textColor="#fff" />
+		<TextView
+			android:id="@+id/title_text"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:textColor="#fff"
+			android:textSize="24sp" />
+	
+		<Button
+			android:id="@+id/title_edit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_margin="5dip"
+			android:text="确定"
+			android:textColor="#fff" />
+</LinearLayout>
 
     <TimePicker
         android:id="@+id/timePicker1"
@@ -28,9 +61,4 @@
         android:layout_height="wrap_content"
         android:textSize="28sp"
         android:text="标签" />
-    <Button 
-        android:id="@+id/add_alarm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="确定" />
 </LinearLayout>

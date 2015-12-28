@@ -30,7 +30,7 @@ public class AlarmService extends Service
 			}
 		}).start();
 		AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		int aMinute = 60 * 1000; // 这是10s的毫秒数
+		int aMinute = 60 * 1000; // 这是60s的毫秒数
 		long triggerAtTime = SystemClock.elapsedRealtime() + aMinute;
 		Intent i = new Intent(this, AlarmReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);

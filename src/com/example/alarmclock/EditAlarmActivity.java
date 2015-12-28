@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,12 +32,12 @@ public class EditAlarmActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.add_clock);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.edit_clock);
 		TextView repeat =(TextView) this.findViewById(R.id.repeat);
 		TextView ring =(TextView) this.findViewById(R.id.ring);
 		TextView tag =(TextView) this.findViewById(R.id.tag);
-		Button addAlarm = (Button) this.findViewById(R.id.add_alarm);
+		Button addAlarm = (Button) this.findViewById(R.id.title_edit);
 //		Button deleteAlarm = (Button) this.findViewById(R.id.delete_alarm);
 		repeat.setOnClickListener(this);
 		ring.setOnClickListener(this);
@@ -48,13 +49,15 @@ public class EditAlarmActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		int id = intent.getIntExtra("id", 0);
 		Cursor cursor = db.query("AlarmClock", null, null, null, null, null, null);
+		cursor.moveToFirst();
 		for (int i = 0; i < id; i++)
 		{
 			cursor.moveToNext();
 		}
-		timePicker.setCurrentHour(cursor.getColumnIndex("hour"));
-		timePicker.setCurrentMinute(cursor.getColumnIndex("minute"));
-		
+		timePicker.setCurrentHour(cursor.getInt(cursor.getColumnIndex("hour")));
+		timePicker.setCurrentMinute(cursor.getInt(cursor.getColumnIndex("minute")));
+		Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("minute"))));
+		Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("hour"))));
 	}
 	
 	@Override
@@ -149,7 +152,7 @@ public class EditAlarmActivity extends Activity implements OnClickListener {
 			});
 			tagDialog.show();
 			break;
-		case R.id.add_alarm:
+		case R.id.title_edit:
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			ContentValues values = new ContentValues();
 			values.put("hour", timePicker.getCurrentHour());
@@ -170,6 +173,8 @@ public class EditAlarmActivity extends Activity implements OnClickListener {
 			values.put("ring", rings[ringBuf]);
 			db.insert("AlarmClock", null, values);
 			values.clear();
+			Intent intent = new Intent(EditAlarmActivity.this, MainActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

@@ -31,7 +31,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 		int day = currentTime.weekDay;
 		int hour = currentTime.hour;
 		int minute = currentTime.minute;
-//		initMediaPlayer();
 		MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
 		{
@@ -53,17 +52,21 @@ public class AlarmReceiver extends BroadcastReceiver {
 				{
 					if (cursor.getInt(cursor.getColumnIndex("hour")) == hour && cursor.getInt(cursor.getColumnIndex("minute")) == minute)
 					{
+						Log.e("test", "shenmegui");
 						Log.e("test", "ʱ�䵽");
 						mediaPlayer.start();
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(5000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						mediaPlayer.stop();
 					}
-					Log.e("test", "nothing");
+//					Log.e("test", Integer.toString(hour));
+//					Log.e("test", Integer.toString(minute));
+//					Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("hour"))));
+//					Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("minute"))));
 //					mediaPlayer.start();
 				}
 			}

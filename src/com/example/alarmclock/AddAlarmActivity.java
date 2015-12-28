@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,12 +30,12 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_clock);
 		TextView repeat =(TextView) this.findViewById(R.id.repeat);
 		TextView ring =(TextView) this.findViewById(R.id.ring);
 		TextView tag =(TextView) this.findViewById(R.id.tag);
-		Button addAlarm = (Button) this.findViewById(R.id.add_alarm);
+		Button addAlarm = (Button) this.findViewById(R.id.title_edit);
 //		Button deleteAlarm = (Button) this.findViewById(R.id.delete_alarm);
 		repeat.setOnClickListener(this);
 		ring.setOnClickListener(this);
@@ -136,7 +137,7 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 			});
 			tagDialog.show();
 			break;
-		case R.id.add_alarm:
+		case R.id.title_edit:
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			ContentValues values = new ContentValues();
 			values.put("hour", timePicker.getCurrentHour());
@@ -157,6 +158,8 @@ public class AddAlarmActivity extends Activity implements OnClickListener {
 			values.put("ring", rings[ringBuf]);
 			db.insert("AlarmClock", null, values);
 			values.clear();
+			Intent intent = new Intent(AddAlarmActivity.this, MainActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

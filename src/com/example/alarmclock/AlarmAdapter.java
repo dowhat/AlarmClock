@@ -14,11 +14,17 @@ import android.widget.TextView;
 public class AlarmAdapter extends ArrayAdapter<AlarmInfo> {
 	
 	private int resourceId;
+	private String time = "";
 
 	public AlarmAdapter(Context context, int textViewResourceId,
 			List<AlarmInfo> alarmList) {
 		super(context, textViewResourceId, alarmList);
 		resourceId = textViewResourceId;
+	}
+	
+	public void notifyDataSetChanged()
+	{
+		super.notifyDataSetChanged();
 	}
 
 	@Override
@@ -29,7 +35,24 @@ public class AlarmAdapter extends ArrayAdapter<AlarmInfo> {
 	TextView clockRepeat = (TextView) view.findViewById(R.id.clock_repeat);
 	TextView clockTag = (TextView) view.findViewById(R.id.clock_tag);
 	CheckBox rememberPass = (CheckBox) view.findViewById(R.id.remember_pass);
-	clockTime.setText(alarmInfo.getHour()+":"+alarmInfo.getMinute()+":00");
+	if(alarmInfo.getHour() >= 10)
+	{
+		time += alarmInfo.getHour() + ":";
+	}
+	else
+	{
+		time += "0" + alarmInfo.getHour() + ":";
+	}
+	if(alarmInfo.getMinute() >= 10)
+	{
+		time += alarmInfo.getMinute() + ":00";
+	}
+	else
+	{
+		time += "0" + alarmInfo.getMinute() + ":00";
+	}
+	clockTime.setText(time);
+	time = "";
 	if(alarmInfo.getStart() ==0)
 	{
 		rememberPass.setChecked(false);
