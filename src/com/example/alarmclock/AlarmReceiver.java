@@ -3,9 +3,11 @@ package com.example.alarmclock;
 import java.io.File;
 
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,14 +34,28 @@ public class AlarmReceiver extends BroadcastReceiver {
 		int day = currentTime.weekDay;
 		int hour = currentTime.hour;
 		int minute = currentTime.minute;
-		MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
 		{
 			if (cursor.getInt(cursor.getColumnIndex("start")) == 1)
 			{
+				MediaPlayer mediaPlayer = new MediaPlayer();
 				if (cursor.getInt(cursor.getColumnIndex("repeat")) == 1 && cursor.getColumnIndex(weekDay[day]) == 1)
 				{
 					Log.e("test", "时间到re");
+					switch (cursor.getString(cursor.getColumnIndex("ring")))
+					{
+					case "kalimba":
+						mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
+						break;
+					case "maid_with_the_flaxen_hair":
+						mediaPlayer = MediaPlayer.create(context, R.raw.maid_with_the_flaxen_hair);
+						break;
+					case "sleepaway":
+						mediaPlayer = MediaPlayer.create(context, R.raw.sleepaway);
+						break;
+					default:
+						mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
+					}
 					mediaPlayer.start();
 					try {
 						Thread.sleep(2000);
@@ -55,14 +71,56 @@ public class AlarmReceiver extends BroadcastReceiver {
 					{
 						Log.e("test", "shenmegui");
 						Log.e("test", "时间到");
-						mediaPlayer.start();
-						try {
-							Thread.sleep(5000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						switch (cursor.getString(cursor.getColumnIndex("ring")))
+						{
+						case "kalimba":
+							mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
+							break;
+						case "maid_with_the_flaxen_hair":
+							mediaPlayer = MediaPlayer.create(context, R.raw.maid_with_the_flaxen_hair);
+							break;
+						case "sleepaway":
+							mediaPlayer = MediaPlayer.create(context, R.raw.sleepaway);
+							break;
+						default:
+							mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
 						}
-						mediaPlayer.stop();
+
+						mediaPlayer.start();
+						AlertDialog.Builder ringDialog = new AlertDialog.Builder(context);
+						ringDialog.setTitle("时间到");
+						ringDialog.setMessage("tag: ");
+						ringDialog.setCancelable(false);
+						ringDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+//								mediaPlayer.stop();
+							}
+						});
+						ringDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+//								try {
+//									Thread.sleep(5000);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								mediaPlayer.stop();
+							}
+						});
+//						ringDialog.show();
+						try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					mediaPlayer.stop();
 						SQLiteDatabase dbt = dbHelper.getWritableDatabase();
 						ContentValues values = new ContentValues();
 						values.put("start", 0);

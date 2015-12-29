@@ -3,6 +3,10 @@ package com.example.alarmclock;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.youmi.android.AdManager;
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,6 +23,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -31,7 +36,8 @@ public class MainActivity extends BaseActivity {
 	private List<AlarmInfo> alarmList = new ArrayList<AlarmInfo>();
 	private AlarmAdapter adapter;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 	super.onCreate(savedInstanceState);
 	requestWindowFeature(Window.FEATURE_NO_TITLE);
 	Intent intent = new Intent(this, AlarmService.class);
@@ -59,6 +65,13 @@ public class MainActivity extends BaseActivity {
 			startActivity(editIntent);
 		}
 	});
+	AdManager.getInstance(this).init("77b301b4a605a2bd", "6cc2fb144a5f3ded", false);
+	//实例化广告条
+	AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+	//获取要嵌入广告条的布局
+	LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+	//将广告条加入到布局中
+	adLayout.addView(adView);
 	// create database
 //	Button createDatabase = (Button) findViewById(R.id.create_database);
 //	createDatabase.setOnClickListener(new OnClickListener() {
@@ -99,14 +112,14 @@ public class MainActivity extends BaseActivity {
 			// 遍历Cursor对象
 			int hour = cursor.getInt(cursor.
 			getColumnIndex("hour"));
-			Log.e("test", "id:" + cursor.getInt(cursor.getColumnIndex("id")));
+			int id = cursor.getInt(cursor.getColumnIndex("id"));
 			int minute = cursor.getInt(cursor.
 			getColumnIndex("minute"));
 			String tag = cursor.getString(cursor.getColumnIndex
 			("tag"));
 			int start = cursor.getInt(cursor.getColumnIndex("start"));
 			int repeat = cursor.getInt(cursor.getColumnIndex("repeat"));
-			AlarmInfo alarmInfo = new AlarmInfo(hour, minute, tag, start, repeat);
+			AlarmInfo alarmInfo = new AlarmInfo(id, hour, minute, tag, start, repeat);
 			alarmList.add(alarmInfo);
 			} while (cursor.moveToNext());
 		}
