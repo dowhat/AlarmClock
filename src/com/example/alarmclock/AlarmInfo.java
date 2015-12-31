@@ -32,17 +32,19 @@ public class AlarmInfo {
 	{
 		return minute;
 	}
+	
 	public String getTag()
 	{
 		return tag;
 	}
+	
 	public int getStart()
 	{
 		return start;
 	}
+	
 	public int getRepeat()
 	{
 		return repeat;
 	}
-	
 }

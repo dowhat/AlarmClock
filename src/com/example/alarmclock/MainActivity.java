@@ -7,7 +7,6 @@ import net.youmi.android.AdManager;
 import net.youmi.android.banner.AdSize;
 import net.youmi.android.banner.AdView;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -45,14 +44,11 @@ public class MainActivity extends BaseActivity {
 	setContentView(R.layout.activity_main);
 	dbHelper = new ClockDatabaseHelper(this, "AlarmClock.db", null, 2);
 	ListView listView = (ListView) this.findViewById(R.id.clock_list);
-	TextView title = (TextView) this.findViewById(R.id.title_text);
-//	title.setBackgroundColor(Color.GRAY);
 	SQLiteDatabase db = dbHelper.getWritableDatabase();
 	// 查询Book表中所有的数据
 	Cursor cursor = db.query("AlarmClock", null, null, null, null, null, null);
 	getAlarmInfo(cursor);
 	adapter = new AlarmAdapter(MainActivity.this, R.layout.clock_view, alarmList);
-//	SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.clock_view, cursor, new String[]{"tag"}, new int[]{R.id.clock_tag});
 	listView.setAdapter(adapter);
 	listView.setOnItemClickListener(new OnItemClickListener() {
 		@Override
@@ -72,18 +68,11 @@ public class MainActivity extends BaseActivity {
 	LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
 	//将广告条加入到布局中
 	adLayout.addView(adView);
-	// create database
-//	Button createDatabase = (Button) findViewById(R.id.create_database);
-//	createDatabase.setOnClickListener(new OnClickListener() {
-//	@Override
-//	public void onClick(View v) {
-//	dbHelper.getWritableDatabase();
-//	}
-//	});
 	
 	// add alarm clock
 	Button addData = (Button) findViewById(R.id.title_add);
-	addData.setOnClickListener(new OnClickListener() {
+	addData.setOnClickListener(new OnClickListener()
+	{
 	@Override
 	public void onClick(View v)
 	{
@@ -92,16 +81,6 @@ public class MainActivity extends BaseActivity {
 	}
 	});
 	
-	// 删除数据按钮
-//	Button deleteButton = (Button) findViewById(R.id.delete_data);
-//	deleteButton.setOnClickListener(new OnClickListener() {
-//	@Override
-//	public void onClick(View v) {
-//	SQLiteDatabase db = dbHelper.getWritableDatabase();
-//	db.delete("AlarmClock", "hour > ?", new String[] { "6" });
-//	Log.e("test", "delete data");
-//	}
-//	});
 	}
 	private void getAlarmInfo(Cursor cursor)
 	{
@@ -109,18 +88,18 @@ public class MainActivity extends BaseActivity {
 		{
 			do
 			{
-			// 遍历Cursor对象
-			int hour = cursor.getInt(cursor.
-			getColumnIndex("hour"));
-			int id = cursor.getInt(cursor.getColumnIndex("id"));
-			int minute = cursor.getInt(cursor.
-			getColumnIndex("minute"));
-			String tag = cursor.getString(cursor.getColumnIndex
-			("tag"));
-			int start = cursor.getInt(cursor.getColumnIndex("start"));
-			int repeat = cursor.getInt(cursor.getColumnIndex("repeat"));
-			AlarmInfo alarmInfo = new AlarmInfo(id, hour, minute, tag, start, repeat);
-			alarmList.add(alarmInfo);
+				// 遍历Cursor对象
+				int hour = cursor.getInt(cursor.
+				getColumnIndex("hour"));
+				int id = cursor.getInt(cursor.getColumnIndex("id"));
+				int minute = cursor.getInt(cursor.
+				getColumnIndex("minute"));
+				String tag = cursor.getString(cursor.getColumnIndex
+				("tag"));
+				int start = cursor.getInt(cursor.getColumnIndex("start"));
+				int repeat = cursor.getInt(cursor.getColumnIndex("repeat"));
+				AlarmInfo alarmInfo = new AlarmInfo(id, hour, minute, tag, start, repeat);
+				alarmList.add(alarmInfo);
 			} while (cursor.moveToNext());
 		}
 	}

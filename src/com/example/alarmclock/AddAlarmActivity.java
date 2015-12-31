@@ -50,6 +50,8 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_clock);
+		
+		// 广告布局
 		AdManager.getInstance(this).init("77b301b4a605a2bd", "6cc2fb144a5f3ded", false);
 		//实例化广告条
 		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
@@ -57,6 +59,7 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
 		//将广告条加入到布局中
 		adLayout.addView(adView);
+		
 		ringData = (TextView) this.findViewById(R.id.ring_data);
 		repeatData = (TextView) this.findViewById(R.id.repeat_data);
 		tagData = (TextView) this.findViewById(R.id.tag_data);
@@ -84,18 +87,22 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 			AlertDialog.Builder repeatDialog = new AlertDialog.Builder(AddAlarmActivity.this);
 			repeatDialog.setTitle("重复");
 			repeatDialog.setCancelable(false);
-			repeatDialog.setMultiChoiceItems(weekDays, weekData, new DialogInterface.OnMultiChoiceClickListener() {
+			repeatDialog.setMultiChoiceItems(weekDays, weekData, new DialogInterface.OnMultiChoiceClickListener()
+			{
 				
 				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked)
+				{
 					// TODO Auto-generated method stub
 					weekData[which] = isChecked;
 				}
 			});
-			repeatDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			repeatDialog.setPositiveButton("确定", new DialogInterface.OnClickListener()
+			{
 				
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					repeatTemp = "";
 					for (int i = 0; i < 7; i++)
@@ -109,10 +116,11 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 					repeatData.setText(repeatTemp);
 				}
 			});
-			repeatDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-				
+			repeatDialog.setNegativeButton("取消", new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					for (int i = 0; i < weekDays.length; i++)
 					{
@@ -126,26 +134,29 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 			AlertDialog.Builder ringDialog = new AlertDialog.Builder(AddAlarmActivity.this);
 			ringDialog.setTitle("铃声");
 			ringDialog.setCancelable(false);
-			ringDialog.setSingleChoiceItems(ringCN, 0, new DialogInterface.OnClickListener() {
-				
+			ringDialog.setSingleChoiceItems(ringCN, 0, new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					ringBuf = which;
 				}
 			});
-			ringDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-				
+			ringDialog.setPositiveButton("确定", new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					ringData.setText(ringCN[ringBuf] + "  >");
 				}
 			});
-			ringDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-				
+			ringDialog.setNegativeButton("取消", new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					ringBuf = 0;
 				}
@@ -158,21 +169,22 @@ public class AddAlarmActivity extends BaseActivity implements OnClickListener {
 			tagDialog.setTitle("标签");
 			tagDialog.setCancelable(false);
 			tagDialog.setView(editText);
-			tagDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-				
+			tagDialog.setPositiveButton("确定", new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
 					tagBuf = editText.getText().toString();
 					tagData.setText(tagBuf + "  >");
 				}
 			});
-			tagDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-				
+			tagDialog.setNegativeButton("取消", new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					// TODO Auto-generated method stub
-					
 				}
 			});
 			tagDialog.show();

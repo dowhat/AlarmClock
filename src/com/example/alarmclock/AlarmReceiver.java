@@ -15,15 +15,19 @@ import android.media.MediaPlayer;
 import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.WindowManager;
 
-public class AlarmReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver
+{
 
-	public AlarmReceiver() {
+	public AlarmReceiver()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(Context context, Intent intent)
+	{
 		ClockDatabaseHelper dbHelper = new ClockDatabaseHelper(context, "AlarmClock.db", null, 2);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String weekDay[]= {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
@@ -38,9 +42,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 		{
 			if (cursor.getInt(cursor.getColumnIndex("start")) == 1)
 			{
-				MediaPlayer mediaPlayer = new MediaPlayer();
 				if (cursor.getInt(cursor.getColumnIndex("repeat")) == 1 && cursor.getColumnIndex(weekDay[day]) == 1)
 				{
+					MediaPlayer mediaPlayer = new MediaPlayer();
 					Log.e("test", "时间到re");
 					switch (cursor.getString(cursor.getColumnIndex("ring")))
 					{
@@ -57,7 +61,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 						mediaPlayer = MediaPlayer.create(context, R.raw.kalimba);
 					}
 					mediaPlayer.start();
-					try {
+					try
+					{
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -69,6 +74,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 				{
 					if (cursor.getInt(cursor.getColumnIndex("repeat")) != 1 && cursor.getInt(cursor.getColumnIndex("hour")) == hour && cursor.getInt(cursor.getColumnIndex("minute")) == minute)
 					{
+						MediaPlayer mediaPlayer = new MediaPlayer();
 						Log.e("test", "shenmegui");
 						Log.e("test", "时间到");
 						switch (cursor.getString(cursor.getColumnIndex("ring")))
@@ -104,16 +110,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Auto-generated method stub
-//								try {
-//									Thread.sleep(5000);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
+								try {
+									Thread.sleep(5000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 //								mediaPlayer.stop();
 							}
 						});
-//						ringDialog.show();
+						AlertDialog alertDialog = ringDialog.create();
+						alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+						alertDialog.show();
 						try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
@@ -126,18 +134,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 						values.put("start", 0);
 						dbt.update("AlarmClock", values, "id = ?", new String[] { Integer.toString(cursor.getInt(cursor.getColumnIndex("id"))) });
 					}
-//					Log.e("test", Integer.toString(hour));
-//					Log.e("test", Integer.toString(minute));
-//					Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("hour"))));
-//					Log.e("test", Integer.toString(cursor.getInt(cursor.getColumnIndex("minute"))));
-//					mediaPlayer.start();
 				}
 			}
 		}
-		
-		
-		
 	}
-	
-
 }

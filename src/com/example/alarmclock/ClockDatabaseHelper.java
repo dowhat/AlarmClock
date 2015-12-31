@@ -29,11 +29,13 @@ public class ClockDatabaseHelper extends SQLiteOpenHelper
 	{
 		super(context, name, factory, version);
 	}
+	
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
 		db.execSQL(CREATE_ALARMCLOCK);
 	}
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
